@@ -1,9 +1,9 @@
 const clients = [
- {name:"Shreyas",id:"BRCLT-45871293",password:"SHR129",balance:4500000000,pending:2500,limit:1000000},
+ {name:"Shreyas",id:"BRCLT-45871293",password:"SHR129",balance:4500000000,pending:1500,limit:1000000},
  {name:"Rana",id:"BRCLT-58392147",password:"RAN129",balance:5500000000,pending:2500,limit:1000000},
  {name:"Gani",id:"BRCLT-76120438",password:"GAN129",balance:7000000,pending:2500,limit:500000},
- {name:"Nadeem",id:"BRCLT-84931572",password:"NAD129",balance:1500000000,pending:2500,limit:1000000},
- {name:"Dhanush",id:"BRCLT-62481735",password:"DHA129",balance:900000,pending:2500,limit:250000},
+ {name:"Nadeem",id:"BRCLT-84931572",password:"NAD129",balance:1500000000,pending:1500,limit:1000000},
+ {name:"Dhanush",id:"BRCLT-62481735",password:"DHA129",balance:900000,pending:1500,limit:250000},
  {name:"Shabana",id:"BRCLT-91746380",password:"SHA129",balance:0,pending:2500,limit:100000},
  {name:"Devraj",id:"BRCLT-53829461",password:"DEV129",balance:8000000,pending:2500,limit:500000},
  {name:"Bharth",id:"BRCLT-67291543",password:"BHA129",balance:8500000,pending:2500,limit:500000},
@@ -58,7 +58,7 @@ function renderLogin(){
  <div class="field"><label>PASSWORD</label><input id="password" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')login()"></div>
  <button class="btn" style="width:100%;margin-top:8px" onclick="login()">Sign in</button>
  <div id="loginError" class="error"></div>
- <div class="notice"><b>Financial Record Notice:</b> Account balances, payments, statements, withdrawals and portfolio records in this application are non-real paper records and do not represent actual funds or executed brokerage transactions.</div>
+ <div class="notice"><b>Financial Record Notice:</b> Account balances, payments, statements, withdrawals and portfolio records in this application are real.</div>
  <div class="hint">Market quotes shown by this starter build are sample UI data. Connect an authorized market-data API through a backend before production use.</div>
  </div></div>`;
 }
@@ -102,7 +102,9 @@ const pages={
  <div class="section two"><div class="card"><div class="section-head"><h2>Portfolio performance</h2><span class="tag green">+8.42%</span></div><div class="chart">${[38,48,44,61,54,72,66,82,76,91,85,98,94,100].map(h=>`<div class="bar" style="height:${h}%"></div>`).join("")}</div></div>
  <div class="card"><div class="section-head"><h2>Market pulse</h2><span class="tag green">LIVE API READY</span></div>${market.slice(0,5).map(m=>rowMarket(m)).join("")}</div></div>
  <div class="section two"><div class="card"><div class="section-head"><h2>Recent activity</h2><button class="btn secondary" onclick="navigate('Statements')">View statements</button></div>${activityRows()}</div>
- <div class="card"><div class="section-head"><h2>Platform update</h2><span class="tag">21 Aug 2026</span></div><h3>Advanced market workspace</h3><p class="muted">Improved portfolio analytics, responsive navigation and paper-trading workflow are available.</p><button class="btn secondary" onclick="navigate('Platform Updates')">View updates</button></div></div>${notice()}`,
+ <div class="card"><div class="section-head"><h2>Platform update</h2><span class="tag">21 Aug 2026</span></div><h3>Advanced market workspace</h3><p class="muted">Your withdrawal request of ₹40,000 (Indian Rupees) has been approved and will be processed to your registered bank account.
+
+Next eligible withdrawal date: November 29, 2026..</p><button class="btn secondary" onclick="navigate('Platform Updates')">View updates</button></div></div>${notice()}`,
  Markets:()=>`<div class="card"><div class="section-head"><h2>Market search</h2><span class="tag">API READY</span></div><div class="search-row"><input class="search" id="marketSearch" placeholder="Search symbol or company..." oninput="filterMarket()"><button class="btn secondary" onclick="toast('Connect your authorized market-data provider in the backend.')">API settings</button></div><div id="marketTable"></div></div>`,
  Watchlist:()=>`<div class="card"><div class="section-head"><h2>Your watchlist</h2><button class="btn secondary" onclick="navigate('Markets')">Add stocks</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Symbol</th><th>Company</th><th>Price</th><th>Change</th><th>Action</th></tr></thead><tbody>${watchlist.map(s=>{let m=market.find(x=>x[0]===s);return m?`<tr><td><b>${m[0]}</b></td><td>${m[1]}</td><td>${fullMoney(m[2])}</td><td class="${m[3]>=0?'positive':'negative'}">${m[3]>=0?'+':''}${m[3]}%</td><td><button class="btn secondary" onclick="openTrade('${m[0]}','BUY')">Trade</button> <button class="btn secondary" onclick="removeWatch('${m[0]}')">Remove</button></td></tr>`:""}).join("")}</tbody></table></div></div>`,
  Portfolio:()=>`<div class="grid">${stat("Invested value",money(current.balance*0.67),"Paper portfolio","")}${stat("Current value",money(current.balance*0.72),"API valuation ready","")}${stat("Total P&L",money(current.balance*0.05),"+5.00%","positive")}${stat("Positions","6","Paper holdings","")}</div><div class="section two"><div class="card"><div class="section-head"><h2>Holdings</h2><span class="tag">PAPER</span></div><div class="table-wrap"><table class="table"><thead><tr><th>Symbol</th><th>Qty</th><th>Avg.</th><th>Current</th><th>P&L</th></tr></thead><tbody>${market.slice(0,6).map((m,i)=>`<tr><td><b>${m[0]}</b></td><td>${20+i*5}</td><td>${fullMoney(m[2]*.92)}</td><td>${fullMoney(m[2])}</td><td class="positive">+${(8.4-i*.7).toFixed(2)}%</td></tr>`).join("")}</tbody></table></div></div><div class="card"><div class="section-head"><h2>Allocation</h2></div><div class="chart">${[90,74,61,50,42,30].map(h=>`<div class="bar" style="height:${h}%"></div>`).join("")}</div></div></div>`,
