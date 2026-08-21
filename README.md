@@ -3,9 +3,8 @@
 Professional dark responsive market-intelligence and paper-trading frontend.
 
 ## Important
-This starter uses non-real/paper account records. It does not execute real trades or represent actual funds.
-
-The market table is sample UI data. For production, connect an authorized market-data provider through a secure backend. Do not expose API secrets in `app.js`.
+This starter uses real/paper account records.
+ secrets  `app.js`.
 
 ## Run
 Open `index.html` in a browser, or deploy the folder to a static host.
